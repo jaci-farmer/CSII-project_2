@@ -4,7 +4,10 @@ from bs4 import BeautifulSoup
 import csv
 
 class GUI:
-    def __init__(self, window):
+    """
+    creating the layout of the application
+    """
+    def __init__(self, window) -> None:
         self.window = window
 
         self.frame_top = Frame(self.window)
@@ -20,8 +23,15 @@ class GUI:
         self.frame_last.pack()
 
 
-    def clicked(self):
+    def clicked(self) -> None:
+        """
+        using the city name to scrap weather data of that city
+        :return:
+        """
         city = self.city_name.get()
+        city = city.lower().strip()
+        if type(city) != str:
+            raise TypeError
 
         # creating url
         url = "https://www.google.com/search?q=" + "weather" + city
@@ -51,7 +61,6 @@ class GUI:
 
         # formatting the string
         pos = strd.find("Wind")
-        otherData = strd[pos:]
 
         # storing data to CSV file
         info = [city, temp, time, sky]
@@ -60,6 +69,5 @@ class GUI:
 
             content.writerow(info)
 
+        # clearing the city name tag
         self.city_name.delete(0, END)
-
-

@@ -1,7 +1,10 @@
 from gui import *
 
 def main():
-
+    """
+    code for creating the window and running the application
+    :return:
+    """
     window = Tk()
     window.title("Weather")
     window.geometry("300x100")
