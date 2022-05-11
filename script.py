@@ -7,7 +7,7 @@ def main():
     """
     window = Tk()
     window.title("Weather")
-    window.geometry("300x100")
+    window.geometry("700x200")
     window.resizable(False, False)
     widgets = GUI(window)
     window.mainloop()

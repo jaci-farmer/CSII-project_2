@@ -11,16 +11,30 @@ class GUI:
         self.window = window
 
         self.frame_top = Frame(self.window)
-        self.label_name = Label(self.frame_top, text='Enter a city to find out weather:')
+        self.label_name = Label(self.frame_top, text='Enter city:')
         self.city_name = Entry(self.frame_top)
         self.label_name.pack(padx=0, side='left')
         self.city_name.pack(padx=5, side='left')
         self.frame_top.pack(anchor='w', pady=10)
 
         self.frame_last = Frame(self.window)
-        self.button_save = Button(self.frame_last, text="SAVE", command=self.clicked)
+        self.button_save = Button(self.frame_last, text="SUBMIT", command=self.clicked)
         self.button_save.pack()
         self.frame_last.pack()
+
+        self.weather = Entry(self.window)
+        self.weather = Entry(
+            self.window,
+            width=100,
+            font=('Arial', 12)
+        )
+
+        self.weather.pack(pady=5)
+
+        self.frame_final = Frame(self.window)
+        self.button_clear = Button(self.frame_last, text="CLEAR", command=self.clear)
+        self.button_clear.pack()
+        self.frame_final.pack()
 
 
     def clicked(self) -> None:
@@ -29,7 +43,7 @@ class GUI:
         :return:
         """
         city = self.city_name.get()
-        city = city.lower().strip()
+        city = city.strip()
         if type(city) != str:
             raise TypeError
 
@@ -62,12 +76,14 @@ class GUI:
         # formatting the string
         pos = strd.find("Wind")
 
-        # storing data to CSV file
-        info = [city, temp, time, sky]
-        with open("weather.csv", 'a', newline= "") as csvfile:
-            content = csv.writer(csvfile)
+        # writing weather sentence
+        self.weather.insert(0, f'City: {city},   Temperature: {temp},   Time: {time},   Sky Description: {sky}')
 
-            content.writerow(info)
 
         # clearing the city name tag
         self.city_name.delete(0, END)
+
+
+    def clear(self) -> None:
+        # clearing the output to run program again
+        self.weather.delete(0, END)
